@@ -7,10 +7,6 @@ let userSchema = new Schema(
     name: { type: "string", textSearch: true },
     email: { type: "string", textSearch: true },
     description: { type: "string", textSearch: true },
-    // "dishes-weekdays-lunch": { type: "string" },
-    // "dishes-weekdays-dinner": { type: "string" },
-    // "dishes-weekends-lunch": { type: "string" },
-    // "dishes-weekends-dinner": { type: "string" },
     weekdaysLunch: { type: 'string[]', path: '$.favouriteDishes.weekdaysLunch[*]' },
     weekdaysDinner: { type: 'string[]', path: '$.favouriteDishes.weekdaysDinner[*]' },
     weekendsLunch: { type: 'string[]', path: '$.favouriteDishes.weekendsLunch[*]' },
@@ -63,7 +59,8 @@ export async function addDishForUser(entityId, dishId) {
   console.log('userData: ', userData)
   userData.favouriteDishes.weekdaysLunch.push(dishId)
   const id = await repository.save(userData);
-  conole.log('updated Data: ', id)
+  console.log('updated Data: ', id)
+  client.quit();
   return id;
 }
 
